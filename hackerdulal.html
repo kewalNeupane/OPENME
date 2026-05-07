@@ -1,0 +1,139 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>System Access</title>
+<style>
+    body {
+        margin: 0;
+        background: black;
+        overflow: hidden;
+        font-family: monospace;
+        color: #00ff00;
+    }
+
+    #terminal {
+        padding: 20px;
+        font-size: 18px;
+        white-space: pre-line;
+    }
+
+    .glow {
+        text-shadow: 0 0 10px #00ff00;
+    }
+
+    .center {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+    }
+
+    .big {
+        font-size: 42px;
+        animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+        50% {
+            opacity: 0.4;
+        }
+    }
+
+    canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: -1;
+    }
+</style>
+</head>
+<body>
+
+<canvas id="matrix"></canvas>
+
+<div id="terminal" class="glow"></div>
+
+<script>
+const terminal = document.getElementById("terminal");
+
+const lines = [
+    "Initializing secure connection...",
+    "Connecting to remote server...",
+    "Bypassing firewall...",
+    "Decrypting files...",
+    "Access granted.",
+    "Injecting payload...",
+    "Downloading secret data...",
+    "Tracking IP address...",
+    "SYSTEM OVERRIDE COMPLETE"
+];
+
+let i = 0;
+
+function typeLine() {
+    if (i < lines.length) {
+        terminal.innerHTML += "> " + lines[i] + "\n";
+        i++;
+        setTimeout(typeLine, 1000);
+    } else {
+        setTimeout(showFinal, 1500);
+    }
+}
+
+function showFinal() {
+    document.body.innerHTML += `
+        <div class="center glow">
+            <div class="big">ACCESS GRANTED</div>
+            <h2>DEVICE COMPROMISED</h2>
+            <p>Just kidding 😎</p>
+            <p>Made by Kewal Neupane</p>
+        </div>
+    `;
+}
+
+typeLine();
+
+// Matrix background effect
+const canvas = document.getElementById('matrix');
+const ctx = canvas.getContext('2d');
+
+canvas.height = window.innerHeight;
+canvas.width = window.innerWidth;
+
+const letters = '01ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const fontSize = 16;
+const columns = canvas.width / fontSize;
+
+const drops = [];
+
+for(let x = 0; x < columns; x++)
+    drops[x] = 1;
+
+function draw() {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = '#0F0';
+    ctx.font = fontSize + 'px monospace';
+
+    for(let i = 0; i < drops.length; i++) {
+        const text = letters[Math.floor(Math.random() * letters.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if(drops[i] * fontSize > canvas.height && Math.random() > 0.975)
+            drops[i] = 0;
+
+        drops[i]++;
+    }
+}
+
+setInterval(draw, 33);
+</script>
+
+</body>
+</html>
+
